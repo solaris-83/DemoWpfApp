@@ -14,10 +14,12 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Button BorderBrush="DarkBlue" Command="{Binding MainWindowCommand}" BorderThickness="2"  Height="40" Padding="10" Content="Main Window" Grid.Row="0" />
                 <Button BorderBrush="DarkBlue" Command="{Binding AnotherPageCommand}" BorderThickness="2" Height="40" Padding="10" Content="Another page" Grid.Row="1" />
                 <Button BorderBrush="DarkBlue" Command="{Binding SendMessageCommand}" BorderThickness="2" Height="40" Padding="10" Content="Send message" Grid.Row="2"  />
+                <Button BorderBrush="DarkBlue" Command="{Binding HtmlPageCommand}" BorderThickness="2" Height="40" Padding="10" Content="HTML page" Grid.Row="3"  />
             </Grid>
         </Border>
         <ContentControl x:Name="contentControl" Grid.Column="1"/>

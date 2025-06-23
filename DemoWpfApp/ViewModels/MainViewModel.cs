@@ -29,6 +29,12 @@ namespace DemoWpfApp.ViewModels
         }
 
         [RelayCommand]
+        private void HtmlPage()
+        {
+            _navigationManager.Navigate(NavigationKeys.HtmlPage);
+        }
+
+        [RelayCommand]
         private void SendMessage()
         {
             WeakReferenceMessenger.Default.Send(new LoggedInUserChangedMessage("John Doe"));

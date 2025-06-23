@@ -1,0 +1,148 @@
+﻿<UserControl x:Class="DemoWpfApp.Views.HtmlPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+             xmlns:local="clr-namespace:DemoWpfApp.Views"
+             xmlns:conv="clr-namespace:DemoWpfApp.Resources.Converters"
+             mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <conv:BoolToLoadingTextConverter x:Key="BoolToLoadingTextConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Main WebView Area -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Navigation Bar -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+                <Button Content="←" Command="{Binding GoBackCommand}" Width="30" Margin="2"/>
+                <Button Content="→" Command="{Binding GoForwardCommand}" Width="30" Margin="2"/>
+                <Button Content="🔄" Command="{Binding RefreshCommand}" Width="30" Margin="2"/>
+                <Button Content="🏠" Command="{Binding GoHomeCommand}" Width="30" Margin="2"/>
+                <Button Content="📄" Command="{Binding LoadCustomHtmlCommand}" Width="30" Margin="2" ToolTip="Load Custom HTML"/>
+            </StackPanel>
+
+            <!-- Address Bar -->
+            <Grid Grid.Row="1" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0" 
+                         Text="{Binding AddressBarText, UpdateSourceTrigger=PropertyChanged}"
+                         x:Name="AddressBar"
+                         KeyDown="AddressBar_KeyDown"
+                         VerticalAlignment="Center"
+                         Padding="5"/>
+
+                <Button Grid.Column="1" 
+                        Content="Go" 
+                        Command="{Binding NavigateCommand}"
+                        CommandParameter="{Binding AddressBarText}"
+                        Margin="5,0,0,0"
+                        Padding="10,5"/>
+            </Grid>
+
+            <!-- WebView2 -->
+            <wv2:WebView2 Grid.Row="2"  Unloaded="WebView_Unloaded"
+                          x:Name="WebView"
+                          Source="{Binding Url}"
+                          Margin="5"/>
+
+            <!-- Status Bar -->
+            <StatusBar Grid.Row="3">
+                <StatusBarItem>
+                    <TextBlock Text="{Binding IsLoading, Converter={StaticResource BoolToLoadingTextConverter}}"/>
+                </StatusBarItem>
+                <StatusBarItem HorizontalAlignment="Right">
+                    <TextBlock Text="{Binding Url}"/>
+                </StatusBarItem>
+            </StatusBar>
+        </Grid>
+
+        <!-- Splitter -->
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="LightGray"/>
+
+        <!-- Communication Panel -->
+        <Grid Grid.Column="2" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Send Message Section -->
+            <GroupBox Grid.Row="0" Header="Send to HTML" Margin="0,0,0,10">
+                <StackPanel>
+                    <TextBox Text="{Binding MessageToSend, UpdateSourceTrigger=PropertyChanged}" 
+                             Margin="0,0,0,5"
+                             x:Name="MessageTextBox"
+                             KeyDown="MessageTextBox_KeyDown"/>
+                    <Button Content="Send Message" Command="{Binding SendMessageToHtmlCommand}" Margin="0,0,0,5"/>
+                    <Button Content="Send User Info" Command="{Binding SendUserInfoToHtmlCommand}" Margin="0,0,0,5"/>
+                    <Button Content="Request Data" Command="{Binding RequestDataFromHtmlCommand}"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- User Info Section -->
+            <GroupBox Grid.Row="1" Header="Current User" Margin="0,0,0,10">
+                <StackPanel>
+                    <TextBox Text="{Binding CurrentUser.Name, UpdateSourceTrigger=PropertyChanged}" 
+                             Margin="0,0,0,2" 
+                             BorderBrush="LightBlue"/>
+                    <TextBox Text="{Binding CurrentUser.Email, UpdateSourceTrigger=PropertyChanged}" 
+                             Margin="0,0,0,2"
+                             BorderBrush="LightBlue"/>
+                    <TextBox Text="{Binding CurrentUser.Age, UpdateSourceTrigger=PropertyChanged}" 
+                             Margin="0,0,0,2"
+                             BorderBrush="LightBlue"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Last Message Section -->
+            <GroupBox Grid.Row="2" Header="Last Received" Margin="0,0,0,10">
+                <TextBlock Text="{Binding ReceivedMessage}" 
+                           TextWrapping="Wrap" 
+                           Background="LightYellow" 
+                           Padding="5"/>
+            </GroupBox>
+
+            <!-- Message Log Section -->
+            <GroupBox Grid.Row="3" Header="Message Log">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ListBox Grid.Row="0" 
+                             ItemsSource="{Binding MessageLog}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+
+                    <Button Grid.Row="1" 
+                            Content="Clear Log" 
+                            Command="{Binding ClearMessageLogCommand}"
+                            Margin="0,5,0,0"/>
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</UserControl>

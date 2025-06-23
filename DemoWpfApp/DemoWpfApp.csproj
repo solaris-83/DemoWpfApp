@@ -7,19 +7,26 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Customers.xml" />
+	  <None Remove="Resources\Page2.html" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Content Include="Customers.xml">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="Resources\Page1.html">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="Resources\Page2.html">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3296.44" />
 		<PackageReference Include="MvvmNavigationModule" Version="1.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Resources\Images\" />
-	  <Folder Include="Resources\Converters\" />
 	</ItemGroup>
 </Project>

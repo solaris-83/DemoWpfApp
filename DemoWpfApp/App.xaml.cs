@@ -29,12 +29,14 @@ namespace DemoWpfApp
                .AddSingleton<ICustomerRepository, CustomerRepository>()
                .AddSingleton<CustomersViewModel>()
                .AddTransient<AnotherPageViewModel>()
+               .AddSingleton<HtmlViewModel>()
                .BuildServiceProvider());
 
             var navManager = Ioc.Default.GetService<INavigationManager>();
             var vm = () => new CustomersViewModel(Ioc.Default.GetService<ICustomerRepository>());
             ((NavigationManagerBase)navManager).Register<CustomersView>(NavigationKeys.Main, vm);
             ((NavigationManagerBase)navManager).Register<AnotherPage>(NavigationKeys.AnotherPage, Ioc.Default.GetService<AnotherPageViewModel>);
+            ((NavigationManagerBase)navManager).Register<HtmlPage>(NavigationKeys.HtmlPage, Ioc.Default.GetService<HtmlViewModel>);
             mainWindow.Show();
             navManager.Navigate(NavigationKeys.Main);
         }
@@ -45,5 +47,6 @@ namespace DemoWpfApp
         public const string Main = nameof(Main);
         public const string AnotherPage = nameof(AnotherPage);
         public const string SendMessage = nameof(SendMessage);
+        public const string HtmlPage = nameof(HtmlPage);
     }
 }
