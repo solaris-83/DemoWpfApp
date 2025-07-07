@@ -18,9 +18,9 @@ namespace DemoWpfApp.Views
     /// <summary>
     /// Interaction logic for AnotherPage.xaml
     /// </summary>
-    public partial class AnotherPage : UserControl
+    public partial class RssReaderPage : UserControl
     {
-        public AnotherPage()
+        public RssReaderPage()
         {
             InitializeComponent();
         }

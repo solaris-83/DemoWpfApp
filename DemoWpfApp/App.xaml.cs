@@ -9,6 +9,7 @@ using DemoWpfApp.Views;
 using MVVMNavigationModule.Abstractions;
 using MVVMNavigationModule.Core;
 using System.Runtime.Versioning;
+using SimpleFeedReader;
 
 [assembly: SupportedOSPlatform("windows")]
 namespace DemoWpfApp
@@ -28,14 +29,16 @@ namespace DemoWpfApp
                .AddSingleton<MainViewModel>()
                .AddSingleton<ICustomerRepository, CustomerRepository>()
                .AddSingleton<CustomersViewModel>()
-               .AddTransient<AnotherPageViewModel>()
+               .AddTransient<RssReaderViewModel>()
                .AddSingleton<HtmlViewModel>()
+               .AddSingleton<IRssReaderService, RssReaderService>()
+               .AddFeedReader(() => new FeedReaderOptions() { ThrowOnError = true })
                .BuildServiceProvider());
 
             var navManager = Ioc.Default.GetService<INavigationManager>();
             var vm = () => new CustomersViewModel(Ioc.Default.GetService<ICustomerRepository>());
             ((NavigationManagerBase)navManager).Register<CustomersView>(NavigationKeys.Main, vm);
-            ((NavigationManagerBase)navManager).Register<AnotherPage>(NavigationKeys.AnotherPage, Ioc.Default.GetService<AnotherPageViewModel>);
+            ((NavigationManagerBase)navManager).Register<RssReaderPage>(NavigationKeys.AnotherPage, Ioc.Default.GetService<RssReaderViewModel>);
             ((NavigationManagerBase)navManager).Register<HtmlPage>(NavigationKeys.HtmlPage, Ioc.Default.GetService<HtmlViewModel>);
             mainWindow.Show();
             navManager.Navigate(NavigationKeys.Main);
