@@ -64,10 +64,14 @@
             </Style.Triggers>
         </Style>
 
+
+        
+
         <!-- DataGrid Cell Style -->
         <Style x:Key="ModernDataGridCellStyle" TargetType="DataGridCell">
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="ToolTip" Value="{Binding Content.Text, RelativeSource={RelativeSource Self}}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="DataGridCell">
@@ -91,11 +95,19 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <!-- DataGrid with Modern Styling -->
-        <ScrollViewer Grid.Row="1">
+        <ComboBox Grid.Row="1"
+                  Margin="10" Width="200"
+                  HorizontalAlignment="Left"
+                ItemsSource="{Binding Sectors}"
+                SelectedItem="{Binding SelectedSector}"
+                >
+        </ComboBox>
+        <ScrollViewer Grid.Row="2">
             <DataGrid x:Name="master"
               Style="{StaticResource ModernDataGridStyle}"
               ColumnHeaderStyle="{StaticResource ModernColumnHeaderStyle}"
@@ -109,11 +121,11 @@
                     <DataGridTextColumn x:Name="sindacatiColumn" Binding="{Binding Path=Sindacati}" Header="Sindcati" Width="160" />
                     <DataGridTextColumn x:Name="settoreColumn" Binding="{Binding Path=Settore}" Header="Settore" Width="140" />
                     <DataGridTextColumn x:Name="categoriaColumn" Binding="{Binding Path=CategoriaInteressata}" Header="Categoria" Width="120" />
-                    <DataGridTextColumn x:Name="modalitaColumn" Binding="{Binding Path=Modalita}" Header="Modalità" Width="140" />
+                    <DataGridTextColumn x:Name="modalitaColumn" Binding="{Binding Path=Modalita}" Header="Modalità" Width="230" />
                     <DataGridTextColumn x:Name="rilevanzaColumn" Binding="{Binding Path=Rilevanza}" Header="Rilevanza" Width="80" />
-                    <DataGridTextColumn x:Name="regionColumn" Binding="{Binding Path=Regione}" Header="Region" Width="60" />
-                    <DataGridTextColumn x:Name="dataProclamazioneColumn" Binding="{Binding Path=DataProclamazione}" Header="Data Proclamazione" Width="80" />
-                    <DataGridTextColumn x:Name="dataRicezioneColumn" Binding="{Binding Path=DataRicezione}" Header="Data Ricezione" Width="80" />
+                    <DataGridTextColumn x:Name="regionColumn" Binding="{Binding Path=Regione}" Header="Regione" Width="80" />
+                    <DataGridTextColumn  x:Name="dataProclamazioneColumn" Binding="{Binding Path=DataProclamazione}" Header="Data Proclamazione" Width="120" />
+                    <DataGridTextColumn x:Name="dataRicezioneColumn" Binding="{Binding Path=DataRicezione}" Header="Data Ricezione" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>

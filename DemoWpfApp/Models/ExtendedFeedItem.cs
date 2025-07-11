@@ -16,16 +16,16 @@ namespace DemoWpfApp.Models
         {
             // Split the string using Regex
             string[] tokens = Regex.Split(item.Summary, pattern1, RegexOptions.IgnoreCase);
-            Modalita = tokens[1];
-            DataFine = tokens[2];
-            Settore = tokens[3];
-            Rilevanza = tokens[4];
-            Regione = tokens[5];
-            Provincia = tokens[6];
-            Sindacati = tokens[7];
-            CategoriaInteressata = tokens[8];
-            DataProclamazione = tokens[9];
-            DataRicezione = tokens[10];
+            Modalita = tokens[1].Trim();
+            DataFine = tokens[2].Trim();
+            Settore = tokens[3].Trim();
+            Rilevanza = tokens[4].Trim();
+            Regione = tokens[5].Trim();
+            Provincia = tokens[6].Trim();
+            Sindacati = tokens[7].Trim();
+            CategoriaInteressata = tokens[8].Trim();
+            DataProclamazione = tokens[9].Trim();
+            DataRicezione = tokens[10].Trim();
             tokens = Regex.Split(item.Title, pattern2, RegexOptions.IgnoreCase);
             var index = tokens[1].IndexOf('-');
             if (index > -1)
